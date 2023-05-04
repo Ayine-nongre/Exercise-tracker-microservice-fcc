@@ -74,7 +74,7 @@ app.get('/api/users', function(req, res){
         const item = { username: data[i].username, _id: data[i]._id }
         users.push(item)
       }
-      res.json({ users })
+      res.json(users)
       
   })
     .catch(error => console.log(error))
@@ -131,19 +131,19 @@ app.post('/api/users/:_id/exercises', function(req, res){
 
 app.get('/api/users/:_id/logs', function(req, res){
   const id = req.params._id
-  let numOfLogs = 0
+  let numOfLogs
 
   getLogs(id)
     .then(data => {
       const logs = []
-
+      
       if (!(req.query.limit)){
-        numOfLogs = data.length
+        numOfLogs = (data.log).length
       }
       else{
         numOfLogs = req.query.limit
       }
-
+      
       for (let i = 0; i < numOfLogs; i++){
         logs.push(data.log[i])
       }
